@@ -43,6 +43,10 @@ app.get('/', (req, res) => {
   res.render('home', { title: 'Home' });
 });
 
+app.get('/test', (req, res) => {
+  res.send('Server working');
+});
+
 app.get('/login', (req, res) => {
   res.render('login', { title: 'Login' });
 });
