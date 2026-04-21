@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const fs = require('fs');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 // Set the view engine to Pug
 app.set('view engine', 'pug');
