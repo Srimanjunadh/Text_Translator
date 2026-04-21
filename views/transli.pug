@@ -1,0 +1,171 @@
+extends layout
+
+block content
+  .container(style="padding: 4rem 0;")
+    .header-section(style="text-align: center; margin-bottom: 3rem;")
+      h1(style="font-size: 3rem; margin-bottom: 1rem;") TRANSLI AI
+      p(style="color: var(--text-muted);") Experience seamless, high-fidelity translation with native pronunciation.
+
+    .card(style="padding: 2rem;")
+      .translation-grid(style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;")
+        .input-panel
+          .panel-header(style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;")
+            label(style="font-weight: 600; color: var(--text-muted);") From
+            select.form-control#source-language(style="width: auto; padding: 0.4rem 1rem;")
+              option(value="auto") Auto Detect
+              option(value="en") English
+              option(value="de") German
+              option(value="hi") Hindi
+              option(value="te") Telugu
+              option(value="ta") Tamil
+              option(value="ur") Urdu
+              option(value="ar") Arabic
+              option(value="pt") Portuguese
+              option(value="fr") French
+              option(value="es") Spanish
+          textarea.form-control#input-text(placeholder="Type or paste text to translate..." style="min-height: 250px; resize: none; font-size: 1.1rem; border-radius: 12px; background: rgba(0,0,0,0.2);")
+
+        .output-panel
+          .panel-header(style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;")
+            label(style="font-weight: 600; color: var(--text-muted);") To
+            select.form-control#target-language(style="width: auto; padding: 0.4rem 1rem;")
+              option(value="de") German
+              option(value="hi") Hindi
+              option(value="te") Telugu
+              option(value="ta") Tamil
+              option(value="ur") Urdu
+              option(value="ar") Arabic
+              option(value="pt") Portuguese
+              option(value="en") English
+              option(value="fr") French
+              option(value="es") Spanish
+              option(value="ja") Japanese
+          .textarea-wrapper(style="position: relative;")
+            textarea.form-control#output-text(placeholder="Translation will appear here..." readonly style="min-height: 250px; resize: none; font-size: 1.1rem; border-radius: 12px; background: rgba(255,255,255,0.05); color: var(--primary); font-weight: 500;")
+            button.btn-voice#speak-btn(onclick="speakTranslation()" title="Listen to translation" style="position: absolute; bottom: 1rem; right: 1rem; background: var(--primary); border: none; border-radius: 50%; width: 44px; height: 44px; display: none; align-items: center; justify-content: center; cursor: pointer; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.3);")
+              svg(width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
+                path(d="M11 5L6 9H2v6h4l5 4V5z")
+                path(d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07")
+
+      #pronunciation-container(style="margin-top: 1rem; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 8px; display: none;")
+        label(style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;") Pronunciation (Phonetic)
+        p#pronunciation-text(style="font-size: 1rem; color: var(--secondary); font-style: italic; margin-top: 0.5rem;")
+
+      .actions(style="display: flex; justify-content: center; margin-top: 2rem;")
+        button.btn.btn-primary.btn-lg(onclick="translateText()" style="padding: 1rem 4rem; display: flex; align-items: center; gap: 0.75rem;") 
+          span Translate
+          svg(width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
+            line(x1="5" y1="12" x2="19" y2="12")
+            polyline(points="12 5 19 12 12 19")
+
+  script.
+    // Initialize voices as soon as they are available
+    let voices = [];
+    function loadVoices() {
+      voices = window.speechSynthesis.getVoices();
+    }
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+    loadVoices();
+
+    async function translateText() {
+      const btn = document.querySelector('.btn-primary');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = 'Translating...';
+      btn.disabled = true;
+
+      const sourceLanguage = document.getElementById("source-language").value;
+      const targetLanguage = document.getElementById("target-language").value;
+      const inputText = document.getElementById("input-text").value;
+
+      if (!inputText.trim()) {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        return;
+      }
+
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&dt=rm&q=${encodeURIComponent(inputText)}`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data && data[0]) {
+          let translatedText = '';
+          data[0].forEach(part => {
+            if (part[0]) translatedText += part[0];
+          });
+          
+          document.getElementById("output-text").value = translatedText;
+          
+          // Handle Pronunciation (Transliteration)
+          // Some responses have transliteration at specific indexes
+          let pronunciation = "";
+          if (data[0] && data[0].length > 1) {
+             // Check if transliteration exists in the last element of the array
+             const lastElement = data[0][data[0].length - 1];
+             if (lastElement && lastElement[3]) {
+               pronunciation = lastElement[3];
+             }
+          }
+          
+          if (pronunciation && targetLanguage !== 'en') {
+            document.getElementById("pronunciation-text").innerText = pronunciation;
+            document.getElementById("pronunciation-container").style.display = 'block';
+          } else {
+            document.getElementById("pronunciation-container").style.display = 'none';
+          }
+
+          document.getElementById("speak-btn").style.display = 'flex';
+        } else {
+          document.getElementById("output-text").value = "Translation failed.";
+        }
+      } catch (error) {
+        console.error("Translation failed:", error);
+        document.getElementById("output-text").value = "Error connecting to service.";
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    function speakTranslation() {
+      const text = document.getElementById("output-text").value;
+      const lang = document.getElementById("target-language").value;
+      
+      if (!text) return;
+      
+      // Stop any current speaking
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      
+      // Language Mapping for better TTS compatibility
+      const langMap = {
+        'te': 'te-IN',
+        'ta': 'ta-IN',
+        'hi': 'hi-IN',
+        'pt': 'pt-PT',
+        'de': 'de-DE',
+        'fr': 'fr-FR',
+        'es': 'es-ES',
+        'en': 'en-US',
+        'ur': 'ur-PK',
+        'ar': 'ar-SA'
+      };
+
+      const speechLang = langMap[lang] || lang;
+      utterance.lang = speechLang;
+      
+      // Select the best voice
+      if (voices.length === 0) voices = window.speechSynthesis.getVoices();
+      
+      const matchingVoice = voices.find(v => v.lang.replace('_', '-').includes(speechLang)) || 
+                            voices.find(v => v.lang.startsWith(lang));
+      
+      if (matchingVoice) {
+        utterance.voice = matchingVoice;
+      }
+
+      utterance.rate = 0.9; // Slightly slower for clarity
+      window.speechSynthesis.speak(utterance);
+    }

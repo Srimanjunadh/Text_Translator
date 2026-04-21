@@ -1,0 +1,51 @@
+extends layout
+
+block content
+  .container(style="padding: 4rem 0;")
+    .profile-layout(style="display: grid; grid-template-columns: 350px 1fr; gap: 3rem;")
+      .profile-info-column
+        .card(style="text-align: center; padding: 3rem 2rem;")
+          .profile-avatar-wrapper(style="position: relative; width: 120px; height: 120px; margin: 0 auto 2rem;")
+            .profile-avatar(style="width: 120px; height: 120px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: 700; color: white; border: 4px solid var(--glass-border);")
+              | J
+            button(style="position: absolute; bottom: 0; right: 0; background: var(--bg-dark); border: 1px solid var(--glass-border); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted);")
+              svg(width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
+                path(d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z")
+                circle(cx="12" cy="13" r="4")
+          
+          h2(style="margin-bottom: 0.5rem;") John Doe
+          p(style="color: var(--text-muted); margin-bottom: 2rem;") Premium Member
+          
+          .profile-meta(style="text-align: left; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px;")
+            .meta-item(style="margin-bottom: 1rem;")
+              label(style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; display: block;") Email
+              p john@example.com
+            .meta-item
+              label(style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; display: block;") Member Since
+              p October 2024
+
+      .profile-settings-column
+        .card(style="padding: 2.5rem;")
+          h3(style="margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem;")
+            svg(width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
+              path(d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2")
+              circle(cx="12" cy="7" r="4")
+            span Account Settings
+          
+          form(style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;")
+            .form-group
+              label Username
+              input.form-control(type="text" value="JohnDoe")
+            .form-group
+              label Email Address
+              input.form-control(type="email" value="john@example.com")
+            .form-group(style="grid-column: span 2;")
+              label Bio
+              textarea.form-control(rows="4" placeholder="Tell us about yourself..." style="resize: none;")
+            
+            .actions(style="grid-column: span 2; display: flex; gap: 1rem; margin-top: 1rem;")
+              button.btn.btn-primary(type="button" style="padding: 0.75rem 2rem;") Save Changes
+              button.btn.btn-outline(type="button" style="padding: 0.75rem 2rem;") Cancel
+
+  style.
+    .form-group label { margin-bottom: 0.5rem; font-weight: 500; color: var(--text-muted); font-size: 0.9rem; }

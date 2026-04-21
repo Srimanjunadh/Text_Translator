@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  .container(style="padding: 6rem 0;")
+    .hero-about(style="text-align: center; margin-bottom: 5rem;")
+      h1(style="font-size: 3.5rem; margin-bottom: 1.5rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;") Our Story
+      p(style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: var(--text-muted); line-height: 1.8;") 
+        | At TRANSLI, we believe that language should be a bridge, not a barrier. Founded with the vision of seamless global communication, 
+        | we combine neural machine learning with cultural nuances to deliver translations that feel human.
+
+    .mission-section(style="margin-bottom: 6rem;")
+      .card(style="display: flex; gap: 3rem; align-items: center;")
+        div(style="flex: 1;")
+          h2(style="margin-bottom: 1.5rem;") Our Mission
+          p(style="color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem;") 
+            | To democratize translation technology and empower every person on the planet to communicate anywhere, anytime, in any language.
+          p(style="color: var(--text-muted); line-height: 1.7;")
+            | We are committed to accuracy, privacy, and speed, ensuring that your ideas travel as fast as your thoughts.
+        div(style="flex: 1; height: 300px; background: var(--glass); border-radius: 12px; display: flex; align-items: center; justify-content: center;")
+          svg(width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round")
+            circle(cx="12" cy="12" r="10")
+            line(x1="2" y1="12" x2="22" y2="12")
+            path(d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z")
+
+    .team-section
+      h2(style="text-align: center; margin-bottom: 4rem;") The Minds Behind TRANSLI
+      .grid(style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; justify-content: center;")
+        - const members = [{ name: 'Vyshnavi.M', id: '221FA04704', color: '#8b5cf6', linkedin: 'https://www.linkedin.com/in/musalamadugu-vyshnavi/', phone: '+91 79819 30108' }, { name: 'Sri Manju Nadh.D', id: '221FA04721', color: '#3b82f6', linkedin: 'https://www.linkedin.com/in/sri-manju-nadh-dalavai-651840300/', phone: '+91 70321 79004' }]
+        each member in members
+          .card(style="text-align: center; padding: 3rem 2rem; transition: transform 0.3s ease; position: relative;")
+            .avatar(style=`width: 100px; height: 100px; background: ${member.color}; margin: 0 auto 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: white; border: 4px solid var(--glass-border);`)
+              | #{member.name[0]}
+            h3(style="margin-bottom: 0.5rem; font-size: 1.5rem;") #{member.name}
+            p(style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;") Student ID: #{member.id}
+            
+
+            a.linkedin-btn(href=member.linkedin target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #0077b5; color: white; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.3s;")
+              svg(width="18" height="18" viewBox="0 0 24 24" fill="currentColor")
+                path(d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z")
+              span LinkedIn Profile
+
+  style.
+    .card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
+    .linkedin-btn:hover { background: #005582; transform: scale(1.05); }

@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  .container(style="padding: 6rem 0;")
+    .contact-grid(style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: start;")
+      .contact-info
+        h1(style="font-size: 3rem; margin-bottom: 1.5rem;") Get in Touch
+        p(style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.7; margin-bottom: 2.5rem;") 
+          | Have a question or need technical assistance? Our team is here to help and will respond within 24 hours.
+        
+        .info-card(style="display: flex; gap: 1.5rem; margin-bottom: 2rem;")
+          .icon(style="color: var(--secondary);")
+            svg(width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
+              path(d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z")
+              polyline(points="22,6 12,13 2,6")
+          div
+            h4(style="margin-bottom: 0.25rem;") Official Support
+            p(style="color: var(--text-muted);") manjusmn22@gmail.com
+
+      .contact-form-panel
+        .card(style="padding: 2.5rem;")
+          h3(style="margin-bottom: 1.5rem;") Send us a Message
+          form(action="mailto:manjusmn22@gmail.com" method="post" enctype="text/plain")
+            .form-group
+              label Full Name
+              input.form-control(type="text" name="name" placeholder="John Doe" required)
+            .form-group
+              label Email Address
+              input.form-control(type="email" name="email" placeholder="john@example.com" required)
+            .form-group
+              label Message
+              textarea.form-control(name="message" rows="6" placeholder="Describe your inquiry or feedback here..." required style="resize: none;")
+            
+            button.btn.btn-primary(type="submit" style="width: 100%; padding: 1rem; font-size: 1rem; margin-top: 1rem;") Send Message

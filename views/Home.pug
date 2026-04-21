@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  section.hero
+    .container
+      h1 Breaking Borders with AI Translation
+      p Translate your ideas effortlessly across 100+ languages with precision and speed.
+      .hero-cta
+        a.btn.btn-primary.btn-lg(href="/transli" style="padding: 1rem 2.5rem; font-size: 1.1rem;") Get Started for Free
+        a.btn.btn-outline.btn-lg(href="/about" style="padding: 1rem 2.5rem; font-size: 1.1rem; margin-left: 1rem;") Learn More
+
+  section.features(style="padding: 4rem 0;")
+    .container
+      .grid(style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;")
+        .card
+          h3(style="color: var(--primary); margin-bottom: 1rem;") Real-time Translation
+          p Instant translation for your documents, messages, and web content with unmatched accuracy.
+        .card
+          h3(style="color: var(--secondary); margin-bottom: 1rem;") Context Aware
+          p Our AI understands semantic nuances, ensuring your message sounds natural in any language.
+        .card
+          h3(style="color: #10b981; margin-bottom: 1rem;") Secure & Private
+          p Your data is encrypted and never shared. We prioritize your privacy above all else.

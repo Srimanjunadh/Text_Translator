@@ -1,0 +1,59 @@
+extends layout
+
+block content
+  .container(style="padding: 4rem 0;")
+    .dashboard-header(style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;")
+      div
+        h1 Dashboard
+        p(style="color: var(--text-muted);") Manage your account and view platform activity.
+      .user-badge(style="display: flex; align-items: center; gap: 1rem; background: var(--glass); padding: 0.5rem 1.5rem; border-radius: 50px; border: 1px solid var(--glass-border);")
+        .avatar(style="width: 32px; height: 32px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem;") #{user ? user.username[0].toUpperCase() : 'U'}
+        span(style="font-weight: 500;") #{user ? user.username : 'Guest'}
+
+    .grid(style="display: grid; grid-template-columns: 1fr 3fr; gap: 2rem;")
+      .sidebar
+        .card(style="padding: 1rem;")
+          ul(style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;")
+            li: a.nav-item.active(href="#" style="display: block; padding: 0.75rem 1rem; border-radius: 8px; text-decoration: none; color: white; background: var(--primary);") Overview
+            li: a.nav-item(href="#" style="display: block; padding: 0.75rem 1rem; border-radius: 8px; text-decoration: none; color: var(--text-muted); transition: all 0.3s;") Translation History
+            li: a.nav-item(href="#" style="display: block; padding: 0.75rem 1rem; border-radius: 8px; text-decoration: none; color: var(--text-muted); transition: all 0.3s;") Saved Phrases
+            li: a.nav-item(href="#" style="display: block; padding: 0.75rem 1rem; border-radius: 8px; text-decoration: none; color: var(--text-muted); transition: all 0.3s;") Settings
+
+      .main-content
+        .stats-grid(style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem;")
+          .card(style="padding: 1.5rem; text-align: center;")
+            h4(style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem;") Total Translations
+            p(style="font-size: 2rem; font-weight: 700; color: var(--primary);") 1,284
+          .card(style="padding: 1.5rem; text-align: center;")
+            h4(style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem;") Words Processed
+            p(style="font-size: 2rem; font-weight: 700; color: var(--secondary);") 42.5k
+          .card(style="padding: 1.5rem; text-align: center;")
+            h4(style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem;") Languages
+            p(style="font-size: 2rem; font-weight: 700; color: #10b981;") 12
+
+        .card(style="padding: 2rem;")
+          h3(style="margin-bottom: 1.5rem;") Recent Activity
+          table(style="width: 100%; border-collapse: collapse;")
+            thead
+              tr(style="border-bottom: 1px solid var(--glass-border); text-align: left; color: var(--text-muted); font-size: 0.85rem;")
+                th(style="padding: 1rem;") Date
+                th(style="padding: 1rem;") Source
+                th(style="padding: 1rem;") Target
+                th(style="padding: 1rem;") Status
+            tbody
+              tr(style="border-bottom: 1px solid var(--glass-border);")
+                td(style="padding: 1rem;") Oct 21, 2024
+                td(style="padding: 1rem;") English
+                td(style="padding: 1rem;") French
+                td(style="padding: 1rem;"): span(style="background: rgba(16, 185, 129, 0.1); color: #10b981; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.75rem;") Completed
+              tr(style="border-bottom: 1px solid var(--glass-border);")
+                td(style="padding: 1rem;") Oct 20, 2024
+                td(style="padding: 1rem;") German
+                td(style="padding: 1rem;") English
+                td(style="padding: 1rem;"): span(style="background: rgba(16, 185, 129, 0.1); color: #10b981; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.75rem;") Completed
+
+  style.
+    .nav-item:hover {
+      background: var(--glass);
+      color: white !important;
+    }

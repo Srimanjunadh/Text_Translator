@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  .container(style="display: flex; justify-content: center; align-items: center; min-height: 80vh; padding: 2rem 0;")
+    .card(style="width: 100%; max-width: 450px;")
+      h2(style="text-align: center; margin-bottom: 2rem; font-size: 2rem;") Welcome Back
+      form(action="/login" method="POST")
+        .form-group
+          label Email Address
+          input.form-control(type="email" name="email" placeholder="name@company.com" required)
+        .form-group
+          label Password
+          input.form-control(type="password" name="password" placeholder="••••••••" required)
+        .form-group(style="display: flex; justify-content: space-between; align-items: center;")
+          label(style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;")
+            input(type="checkbox" style="accent-color: var(--primary);")
+            span Remember me
+          a(href="#" style="color: var(--primary); font-size: 0.9rem; text-decoration: none;") Forgot password?
+        
+        button.btn.btn-primary(type="submit" style="width: 100%; padding: 0.8rem; margin-top: 1rem;") Sign In
+        
+        p(style="text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem;") 
+          | Don't have an account? 
+          a(href="/registration" style="color: var(--primary); text-decoration: none; font-weight: 600;") Create account
